@@ -174,8 +174,82 @@ $(document).ready(function () {
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; analisis_datos2</p>
+<div id="importar-archivo" class="section level3">
+<h3>Importar archivo</h3>
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="dudas" class="section level3">
+<h3>Dudas</h3>
+<p>Estimado se???or experto al revisar su archivo surgen las siguientes dudas:</p>
+<ol style="list-style-type: decimal">
+<li>???La variable Fecha es relevante para el estudio?.</li>
+<li><p>Todos los clientes deben tener asociados un gasto? COnsulto esto porque existen clientes que no tienen asociado ningun gasto pero si reflejan un pago. En este orden de ideas le sugiero crear una nueva variable otros2 que asumir??? el valor de 1 en cada uno de estos casos.</p></li>
+<li><p>???Un pago debe proceder de solo 1 causal por mes?</p></li>
+</ol>
+</div>
+<div id="despedida" class="section level3">
+<h3>Despedida</h3>
+<p>Agradecemos una respuesta sobre las dudas. Quedo muy atenta. ======= #Read xlxs</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5leGNlbCA8LSByZWFkX3hsc3goXCJkYXRhL2RhdG9zLnhsc3hcIilcblxuXG5cblxubmV3X2RhdCA8LSBleGNlbCAlPiVcbiAgbXV0YXRlKG5vX2FzaWduYWRvcyA9IGlmZWxzZShTQUxVRCArIE9UUk9TICsgVklBSkVTICsgREVVREFTICsgQkFOQ08gPT0gMSwgMCwgMSkpICU+JVxuICBtdXRhdGUoZXJyb3JfYXNpZyAgID0gaWZlbHNlKFNBTFVEICsgT1RST1MgKyBWSUFKRVMgKyBERVVEQVMgKyBCQU5DTyA+IDEsVFJVRSwgRkFMU0UpKSAlPiVcbiAgbXV0YXRlKGluY3VtcGxpbyAgICA9IGlmZWxzZShTQUxVRCArIE9UUk9TICsgVklBSkVTICsgREVVREFTICsgQkFOQ08gPT0gMSAmIFBBR08gPT0gMCwxLCAwKSlcblxuYGBgIn0= -->
+<pre class="r"><code>
+excel &lt;- read_xlsx(&quot;data/datos.xlsx&quot;)
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKbGlicmFyeSh0aWR5dmVyc2UpCmBgYAo=</div>
+
+
+
+new_dat &lt;- excel %&gt;%
+  mutate(no_asignados = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO == 1, 0, 1)) %&gt;%
+  mutate(error_asig   = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO &gt; 1,TRUE, FALSE)) %&gt;%
+  mutate(incumplio    = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO == 1 &amp; PAGO == 0,1, 0))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="cuantos" class="section level1">
+<h1>cuantos</h1>
+<p>no_asignados : registros que no tienen una tipo de deudad asignado error_asig : verificar si el registro no tiene mas de 1 tipo de deuda incumplio : validar si tiene una deuda pero no pago</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoc3VtbWFyeShuZXdfZGF0JGluY3VtcGxpbyA9PSAxKSlcbmBgYCJ9 -->
+<pre class="r"><code>print(summary(new_dat$incumplio == 1))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KG5ld19kYXQsIGFlcyhUSVBPLFBBR08pKSArXG4gIGdlb21fcG9pbnQoKSArXG4gICNmYWNldF93cmFwKH5jb250aW5lbnQpICtcbiAgbGFicyh0aXRsZSA9IFwiVGlwb3MgZGUgcGFnb1wiKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(new_dat, aes(TIPO,PAGO)) +
+  geom_point() +
+  #facet_wrap(~continent) +
+  labs(title = &quot;Tipos de pago&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>master</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLSANCg0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9DQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmBgYA0KPDw8PDw8PCBhbmFsaXNpc19kYXRvczINCg0KIyMjIEltcG9ydGFyIGFyY2hpdm8NCg0KYGBge3IsIGluY2x1ZGU9RkFMU0V9DQpsaWJyYXJ5KHJlYWR4bCkNCg0KZGF0b3M8LXJlYWRfZXhjZWwoIkM6L1VzZXJzL0plbm55ZmVyIENvbWJhcml6YS9EZXNrdG9wL3Zhcmlvcy9EaXBsb21hZG8gQmlnIERhdGEvQ2xhc2UxMF8xNy4xMi4wOSAgRGVzYXJyb2xsbyBkZSBhcGxpY2FjaW9uZXMgIGJpZyBkYXRhICBSL1JnaXQvZ2FwTWluZGVyUHJhY3RpY2UvZGF0b3MueGxzeCIpDQoNCmBgYA0KDQojIyMgRHVkYXMNCg0KRXN0aW1hZG8gc2U/Pz9vciBleHBlcnRvIGFsIHJldmlzYXIgc3UgYXJjaGl2byBzdXJnZW4gbGFzIHNpZ3VpZW50ZXMgZHVkYXM6DQoNCjEuID8/P0xhIHZhcmlhYmxlIEZlY2hhIGVzIHJlbGV2YW50ZSBwYXJhIGVsIGVzdHVkaW8/Lg0KMS4gVG9kb3MgbG9zIGNsaWVudGVzIGRlYmVuIHRlbmVyIGFzb2NpYWRvcyB1biBnYXN0bz8gQ09uc3VsdG8gZXN0byBwb3JxdWUgZXhpc3RlbiBjbGllbnRlcyBxdWUgbm8gdGllbmVuIGFzb2NpYWRvIG5pbmd1biBnYXN0byBwZXJvIHNpIHJlZmxlamFuIHVuIHBhZ28uIEVuIGVzdGUgb3JkZW4gZGUgaWRlYXMgbGUgc3VnaWVybyBjcmVhciB1bmEgbnVldmEgdmFyaWFibGUgb3Ryb3MyIHF1ZSBhc3VtaXI/Pz8gZWwgdmFsb3IgZGUgMSBlbiBjYWRhIHVubyBkZSBlc3RvcyBjYXNvcy4NCg0KMS4gPz8/VW4gcGFnbyBkZWJlIHByb2NlZGVyIGRlIHNvbG8gMSBjYXVzYWwgcG9yIG1lcz8gDQoNCiMjIyBEZXNwZWRpZGEgDQoNCkFncmFkZWNlbW9zIHVuYSByZXNwdWVzdGEgc29icmUgbGFzIGR1ZGFzLg0KUXVlZG8gbXV5IGF0ZW50YS4NCj09PT09PT0NCiNSZWFkIHhseHMNCg0KYGBge3J9DQoNCmV4Y2VsIDwtIHJlYWRfeGxzeCgiZGF0YS9kYXRvcy54bHN4IikNCg0KDQoNCg0KbmV3X2RhdCA8LSBleGNlbCAlPiUNCiAgbXV0YXRlKG5vX2FzaWduYWRvcyA9IGlmZWxzZShTQUxVRCArIE9UUk9TICsgVklBSkVTICsgREVVREFTICsgQkFOQ08gPT0gMSwgMCwgMSkpICU+JQ0KICBtdXRhdGUoZXJyb3JfYXNpZyAgID0gaWZlbHNlKFNBTFVEICsgT1RST1MgKyBWSUFKRVMgKyBERVVEQVMgKyBCQU5DTyA+IDEsVFJVRSwgRkFMU0UpKSAlPiUNCiAgbXV0YXRlKGluY3VtcGxpbyAgICA9IGlmZWxzZShTQUxVRCArIE9UUk9TICsgVklBSkVTICsgREVVREFTICsgQkFOQ08gPT0gMSAmIFBBR08gPT0gMCwxLCAwKSkNCg0KYGBgDQoNCiNjdWFudG9zIA0Kbm9fYXNpZ25hZG9zIDogcmVnaXN0cm9zIHF1ZSBubyB0aWVuZW4gdW5hIHRpcG8gZGUgZGV1ZGFkIGFzaWduYWRvIA0KZXJyb3JfYXNpZyAgIDogdmVyaWZpY2FyIHNpIGVsIHJlZ2lzdHJvIG5vIHRpZW5lIG1hcyBkZSAxIHRpcG8gZGUgZGV1ZGENCmluY3VtcGxpbyAgICA6IHZhbGlkYXIgc2kgdGllbmUgdW5hIGRldWRhIHBlcm8gbm8gcGFnbyANCmBgYHtyfQ0KcHJpbnQoc3VtbWFyeShuZXdfZGF0JGluY3VtcGxpbyA9PSAxKSkNCmBgYA0KDQpgYGB7cn0NCmdncGxvdChuZXdfZGF0LCBhZXMoVElQTyxQQUdPKSkgKw0KICBnZW9tX3BvaW50KCkgKw0KICAjZmFjZXRfd3JhcCh+Y29udGluZW50KSArDQogIGxhYnModGl0bGUgPSAiVGlwb3MgZGUgcGFnbyIpDQpgYGANCg0KPj4+Pj4+PiBtYXN0ZXINCg==</div>
 
 
 

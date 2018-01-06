@@ -1,9 +1,66 @@
 ---
 title: "R Notebook"
 output: html_notebook
----
+--- 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
+<<<<<<< analisis_datos2
+
+### Importar archivo
+
+```{r, include=FALSE}
+library(readxl)
+
+datos<-read_excel("C:/Users/Jennyfer Combariza/Desktop/varios/Diplomado Big Data/Clase10_17.12.09  Desarrollo de aplicaciones  big data  R/Rgit/gapMinderPractice/datos.xlsx")
+
+```
+
+### Dudas
+
+Estimado se???or experto al revisar su archivo surgen las siguientes dudas:
+
+1. ???La variable Fecha es relevante para el estudio?.
+1. Todos los clientes deben tener asociados un gasto? COnsulto esto porque existen clientes que no tienen asociado ningun gasto pero si reflejan un pago. En este orden de ideas le sugiero crear una nueva variable otros2 que asumir??? el valor de 1 en cada uno de estos casos.
+
+1. ???Un pago debe proceder de solo 1 causal por mes? 
+
+### Despedida 
+
+Agradecemos una respuesta sobre las dudas.
+Quedo muy atenta.
+=======
+#Read xlxs
+
+```{r}
+
+excel <- read_xlsx("data/datos.xlsx")
+
+
+
+
+new_dat <- excel %>%
+  mutate(no_asignados = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO == 1, 0, 1)) %>%
+  mutate(error_asig   = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO > 1,TRUE, FALSE)) %>%
+  mutate(incumplio    = ifelse(SALUD + OTROS + VIAJES + DEUDAS + BANCO == 1 & PAGO == 0,1, 0))
+
+```
+
+#cuantos 
+no_asignados : registros que no tienen una tipo de deudad asignado 
+error_asig   : verificar si el registro no tiene mas de 1 tipo de deuda
+incumplio    : validar si tiene una deuda pero no pago 
+```{r}
+print(summary(new_dat$incumplio == 1))
+```
+
+```{r}
+ggplot(new_dat, aes(TIPO,PAGO)) +
+  geom_point() +
+  #facet_wrap(~continent) +
+  labs(title = "Tipos de pago")
+```
+
+>>>>>>> master
